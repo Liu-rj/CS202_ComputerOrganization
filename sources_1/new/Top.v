@@ -46,7 +46,7 @@ module Top(clk,
     //cpu instance
     cpu cpu_instance(.clk(clk),.rst(rst),.switchN24(switchN24),.ledN24(ledN24));
     
-    Bin_BCD binToBCD(.binary({{3{1'b0}},led24}),.decimal(BCD));
+    Bin_BCD binToBCD(.binary({{3{1'b0}},ledN24}),.decimal(BCD));
     
     display_tube tube(.on_off(tub_on_off),.rst(rst),.clk(clk),.num(BCD),.DIG(DIG),.Y(Y));
     

@@ -20,17 +20,26 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module cpu(clock, // for test, from clk to clock, should be clk in real situation
-           rst,
+module cpu(clk, // for test, from clk to clock, should be clk in real situation
+           rst, //Active High
            switchN24,
-           ledN24);
-           
-    input clock; // for test, from clk to clock, should be clk
+           ledN24,
+        //    start_pg,
+        //    rx,
+        //    tx
+        );
+   
+    input clk; // for test, from clk to clock, should be clk
     input rst;
     input[18:0] switchN24;
     output [23:0] ledN24;
+    // // UART Programmer Pinouts
+    // // start Uart communicate at high level
+    // input start_pg; // Active High
+    // input rx; // receive data by UART
+    // output tx; // send data by UART
     
-    // wire clock; // output clock signal, should not be annotated
+    wire clock; // output clock signal, should not be annotated
     wire [31:0]Instruction;
     wire [31:0]branch_base_addr;
     wire [31:0]Addr_result;
@@ -67,11 +76,30 @@ module cpu(clock, // for test, from clk to clock, should be clk in real situatio
     
     wire ledcs;
     wire [1:0]ledaddr;
+
+    // // UART Programmer Pinouts
+    // wire upg_clk, upg_clk_o;
+    // wire upg_wen_o; //Uart write out enable
+    // wire upg_done_o; //Uart rx data have done
+    // //data to which memory unit of program_rom/dmemory32
+    // wire [14:0] upg_adr_o;
+    // //data to program_rom or dmemory32
+    // wire [31:0] upg_dat_o;
+
+    // wire spg_bufg;
+    // BUFG U1(.I(start_pg), .O(spg_bufg)); // de-twitter
+    // // Generate UART Programmer reset signal
+    // reg upg_rst;
+    // always @ (posedge fpga_clk) begin
+    //     if (spg_bufg) upg_rst = 0;
+    //     if (fpga_rst) upg_rst = 1;
+    // end
+    // assign rst = fpga_rst | !upg_rst;
     
-    // cpuclk cpuclk(
-    // .clk_in1(clk),
-    // .clk_out1(clock)
-    // );
+    cpuclk cpuclk(
+    .clk_in1(clk),
+    .clk_out1(clock)
+    );
     
     Ifetc32 ifetch(
     .Instruction(Instruction),
@@ -186,7 +214,7 @@ module cpu(clock, // for test, from clk to clock, should be clk in real situatio
     .ledwrite(IOWrite),
     .ledcs(ledcs),
     .ledaddr(address[1:0]),
-    .ledwdata(write_data[15:0]), // io write data to be displayed on leds
+    .ledwdata(write_data), // io write data to be displayed on leds
     .ledout(ledN24) // led display port
     );
     
