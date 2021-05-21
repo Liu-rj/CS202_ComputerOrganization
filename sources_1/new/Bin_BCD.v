@@ -21,10 +21,12 @@
 
 
 module Bin_BCD(
+    input digwrite,	        // 写信号
+    input digcs,		    // 从memorio来的DIG片选信号   !!!!!!!!!!!!!!!!!
     input [26:0] binary,
     output [31:0] decimal
     );
- 
+
     reg [3:0] d7;
     reg [3:0] d6;
     reg [3:0] d5;
@@ -34,7 +36,7 @@ module Bin_BCD(
     reg [3:0] d1;
     reg [3:0] d0;
 
-    assign decimal = {d7[3:0], d6[3:0],d5[3:0], d4[3:0], d3[3:0],d2[3:0], d1[3:0], d0[3:0]};
+    assign decimal = (digcs && digwrite) ? {d7[3:0], d6[3:0],d5[3:0], d4[3:0], d3[3:0],d2[3:0], d1[3:0], d0[3:0]} : decimal;
 
     integer i;
     always @(binary) begin

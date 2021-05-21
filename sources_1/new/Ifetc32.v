@@ -20,10 +20,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Ifetc32(Instruction,
+module Ifetc32(Instruction_i,
                branch_base_addr,
                link_addr,
-               pco,
                clock,
                reset,
                Addr_result,
@@ -33,11 +32,10 @@ module Ifetc32(Instruction,
                Jmp,
                Jal,
                Jr,
-               Zero);
-    output[31:0] Instruction; // the instruction fetched from this module
-    output[31:0] branch_base_addr; // (pc+4) to ALU which is used by branch type instruction
-    output reg [31:0] link_addr; // (pc+4) to decoder which is used by jal instruction
-    output[31:0] pco;      // bind with the new output port 'pco' in IFetc32
+               Zero,
+               Instruction_o,
+               rom_adr_o);
+    input[31:0] Instruction_i; // the instruction fetched from this module
     input clock,reset; // Clock and reset
     // from ALU
     input[31:0] Addr_result; // the calculated address from ALU
@@ -50,17 +48,18 @@ module Ifetc32(Instruction,
     input Jmp; // while Jmp 1,it means current instruction is jump
     input Jal; // while Jal is 1,it means current instruction is jal
     input Jr; // while Jr is 1,it means current instruction is jr
+
+    output[31:0] Instruction_o;
+    output[31:0] branch_base_addr; // (pc+4) to ALU which is used by branch type instruction
+    output reg [31:0] link_addr; // (pc+4) to decoder which is used by jal instruction
+    output[13:0] rom_adr_o;      // bind with the new output port 'pco' in IFetc32
+    
     reg [31:0] PC;
     reg [31:0] Next_PC;
 
     assign branch_base_addr = PC + 4;
-    assign pco = PC;
-
-    prgrom instmem(
-    .clka(clock), // input wire clka
-    .addra(PC[15:2]), // input wire [13 : 0] addra
-    .douta(Instruction) // output wire [31 : 0] douta
-    );
+    assign rom_adr_o = PC[15:2];
+    assign Instruction_o = Instruction_i;
     
     always @* begin
         if (((Branch == 1) && (Zero == 1)) || ((nBranch == 1) && (Zero == 0))) // beq, bne
@@ -68,7 +67,7 @@ module Ifetc32(Instruction,
         else if (Jr == 1)
             Next_PC = Read_data_1 * 4; // the value of $31 register
         else if ((Jmp == 1) || (Jal == 1))
-            Next_PC = {4'b0000, Instruction[25:0], 2'b00};
+            Next_PC = {4'b0000, Instruction_i[25:0], 2'b00};
         else Next_PC = PC + 4; // PC+4
     end
 

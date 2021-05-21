@@ -20,7 +20,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module MemOrIO(mRead,
+module MemOrIO(Alu_resultLow,
+               mRead,
                mWrite,
                ioRead,
                ioWrite,
@@ -32,7 +33,9 @@ module MemOrIO(mRead,
                r_rdata,
                write_data,
                LEDCtrl,
-               SwitchCtrl);
+               SwitchCtrl,
+               DigCtrl);
+    input[9:0] Alu_resultLow; // 0x60, 0x62, 0x80, 0x82
     input mRead; // read memory, from control32
     input mWrite; // write memory, from control32
     input ioRead; // read IO, from control32
@@ -48,13 +51,15 @@ module MemOrIO(mRead,
     output reg[31:0] write_data; // data to memory or I/O（m_wdata, io_wdata)
     output LEDCtrl; // LED Chip Select
     output SwitchCtrl; // Switch Chip Select
+    output DigCtrl; // digital display tube
 
     assign addr_out = addr_in;
     // The data wirte to register file may be from memory or io.
     // While the data is from io, it should be the lower 16bit of r_wdata.
     assign r_wdata = (mRead == 1'b1) ? m_rdata : {{16'b0}, io_rdata};
     // Chip select signal of Led and Switch are all active high;
-    assign LEDCtrl = ioWrite;
+    assign LEDCtrl = ioWrite && (Alu_resultLow == 10'h60 || Alu_resultLow == 10'h62);
+    assign DigCtrl = ioWrite && (Alu_resultLow == 10'h80 || Alu_resultLow == 10'h82);
     assign SwitchCtrl = ioRead;
     always @* begin
         if ((mWrite == 1)||(ioWrite == 1))
