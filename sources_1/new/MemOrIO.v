@@ -35,7 +35,7 @@ module MemOrIO(Alu_resultLow,
                LEDCtrl,
                SwitchCtrl,
                DigCtrl);
-    input[9:0] Alu_resultLow; // 0x60, 0x62, 0x80, 0x82
+    input[7:0] Alu_resultLow; // 0x60, 0x62, 0x80, 0x82
     input mRead; // read memory, from control32
     input mWrite; // write memory, from control32
     input ioRead; // read IO, from control32
@@ -58,13 +58,22 @@ module MemOrIO(Alu_resultLow,
     // While the data is from io, it should be the lower 16bit of r_wdata.
     assign r_wdata = (mRead == 1'b1) ? m_rdata : {{16'b0}, io_rdata};
     // Chip select signal of Led and Switch are all active high;
-    assign LEDCtrl = ioWrite && (Alu_resultLow == 10'h60 || Alu_resultLow == 10'h62);
-    assign DigCtrl = ioWrite && (Alu_resultLow == 10'h80 || Alu_resultLow == 10'h82);
+    assign LEDCtrl = ioWrite && (Alu_resultLow == 8'h60 || Alu_resultLow == 8'h62);
+    assign DigCtrl = ioWrite && (Alu_resultLow == 8'h80 );
     assign SwitchCtrl = ioRead;
     always @* begin
         if ((mWrite == 1)||(ioWrite == 1))
         //wirte_data could go to either memory or IO. where is it from?
-            write_data = (mWrite == 1) ? r_rdata : {{16'b0}, r_rdata[15:0]}; // corrected
+            //write_data = (mWrite == 1) ? r_rdata : {{16'b0}, r_rdata[15:0]}; // corrected
+            if ( LEDCtrl ) begin
+                write_data ={{15'b0}, r_rdata[16:0]};
+            end
+            else if ( DigCtrl ) begin
+                write_data = r_rdata;
+            end
+            else begin
+                write_data = r_rdata;
+            end
         else
             write_data = 32'hZZZZZZZZ;
     end

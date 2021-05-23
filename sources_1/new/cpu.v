@@ -97,7 +97,8 @@ module cpu(input fpga_clk,
     display_tube tube(
         .rst(fpga_rst),
         .clk(fpga_clk),
-        .write_data(write_data[16:0]),
+        //.digaddr(address[1:0]),
+        .write_data(write_data),//将以8位16进制显示这32位的数据
         .digwrite(IOWrite),
         .digcs(digcs),
         .DIG(DIG),
@@ -137,14 +138,14 @@ module cpu(input fpga_clk,
         .upg_tx_o(upg_tx)
     );
 
-    // // generate cpuclk
-    // cpuclk cpuclk(
-    // .clk_in1(fpga_clk),
-    // .clk_out1(cpu_clk),
-    // .clk_out2(upg_clk)
-    // );
-    assign cpu_clk = fpga_clk;
-    assign upg_clk = fpga_clk;
+    // generate cpuclk
+    cpuclk cpuclk(
+    .clk_in1(fpga_clk),
+    .clk_out1(cpu_clk),
+    .clk_out2(upg_clk)
+    );
+    // assign cpu_clk = fpga_clk;
+    // assign upg_clk = fpga_clk;
 
     // instruction fetch destination
     programrom programrom_o(
@@ -152,7 +153,7 @@ module cpu(input fpga_clk,
         .rom_adr_i(rom_adr_o),
         .upg_rst_i(upg_rst),
         .upg_clk_i(upg_clk_o),
-        .upg_wen_i(upg_wen_o),
+        .upg_wen_i((!upg_adr_o[14] & upg_wen_o)?1'b1:1'b0),
         .upg_adr_i(upg_adr_o[13:0]),
         .upg_dat_i(upg_dat_o),
         .upg_done_i(upg_done_o),
@@ -241,7 +242,7 @@ module cpu(input fpga_clk,
     .ram_dat_i(write_data), // 32bit
     .upg_rst_i(upg_rst),
     .upg_clk_i(upg_clk_o),
-    .upg_wen_i(upg_wen_o),
+    .upg_wen_i( (upg_adr_o[14] & upg_wen_o)? 1'b1:1'b0),
     .upg_adr_i(upg_adr_o[13:0]), // notice 15bit to 14bit
     .upg_dat_i(upg_dat_o),
     .upg_done_i(upg_done_o),
@@ -249,7 +250,7 @@ module cpu(input fpga_clk,
     );
 
     MemOrIO memorio(
-    .Alu_resultLow(ALU_Result[9:0]),
+    .Alu_resultLow(ALU_Result[7:0]),
     .mRead(MemRead),
     .mWrite(MemWrite),
     .ioRead(IORead),

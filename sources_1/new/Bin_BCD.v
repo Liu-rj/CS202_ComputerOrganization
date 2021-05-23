@@ -23,8 +23,8 @@
 module Bin_BCD(
     input digwrite,	        // 写信号
     input digcs,		    // 从memorio来的DIG片选信号   !!!!!!!!!!!!!!!!!
-    input [26:0] binary,
-    output [31:0] decimal
+    input [10:0] binary,
+    output [11:0] decimal
     );
 
     reg [3:0] d7;
