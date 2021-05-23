@@ -27,6 +27,7 @@ module display_tube(
     input [31:0] write_data,      //要显示的数字  
     input digwrite,	        // 写信号
     input digcs,		    // 从memorio来的DIG片选信号   !!!!!!!!!!!!!!!!!
+    //input enable;
     output [7:0] DIG,       //8个 扫描一个
     output [7:0] Y          //输出的内容
     );

@@ -33,6 +33,7 @@ module cpu(input fpga_clk,
            output upg_tx); // send data by UART
 
     wire digcs;
+    //wire dig_enable;
 
     wire cpu_clk; // output cpu_clk signal, should not be annotated
     wire rst;
@@ -92,14 +93,15 @@ module cpu(input fpga_clk,
         if (fpga_rst) upg_rst = 1;
     end
     assign rst = fpga_rst | !upg_rst;
-
+    //assign dig_enable = !rst & 
     // IO and Display module
     display_tube tube(
-        .rst(fpga_rst),
+        .rst(rst),
         .clk(fpga_clk),
         //.digaddr(address[1:0]),
         .write_data(write_data),//将以8位16进制显示这32位的数据
         .digwrite(IOWrite),
+        //.enable(dig_enable),
         .digcs(digcs),
         .DIG(DIG),
         .Y(Y)
