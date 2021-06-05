@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2017.4 (64-bit)
+# SW Build 2086221 on Fri Dec 15 20:55:39 MST 2017
+# IP Build 2085800 on Fri Dec 15 22:25:07 MST 2017
+# Start of session at: Mon May 24 16:07:13 2021
+# Process ID: 16404
+# Current directory: E:/vivado/vivadoProjects/CS202_CPU_final/CS202_CPU_final.runs/synth_1
+# Command line: vivado.exe -log CPU_UART.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source CPU_UART.tcl
+# Log file: E:/vivado/vivadoProjects/CS202_CPU_final/CS202_CPU_final.runs/synth_1/CPU_UART.vds
+# Journal file: E:/vivado/vivadoProjects/CS202_CPU_final/CS202_CPU_final.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source CPU_UART.tcl -notrace

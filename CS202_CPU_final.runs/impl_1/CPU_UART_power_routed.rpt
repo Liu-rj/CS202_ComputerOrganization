@@ -1,0 +1,256 @@
+Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+----------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version     : Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
+| Date             : Mon May 24 16:11:10 2021
+| Host             : DESKTOP-NP3OOP3 running 64-bit major release  (build 9200)
+| Command          : report_power -file CPU_UART_power_routed.rpt -pb CPU_UART_power_summary_routed.pb -rpx CPU_UART_power_routed.rpx
+| Design           : CPU_UART
+| Device           : xc7a100tfgg484-1
+| Design State     : routed
+| Grade            : commercial
+| Process          : typical
+| Characterization : Production
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+Power Report
+
+Table of Contents
+-----------------
+1. Summary
+1.1 On-Chip Components
+1.2 Power Supply Summary
+1.3 Confidence Level
+2. Settings
+2.1 Environment
+2.2 Clock Constraints
+3. Detailed Reports
+3.1 By Hierarchy
+
+1. Summary
+----------
+
++--------------------------+----------------------------------+
+| Total On-Chip Power (W)  | 60.691 (Junction temp exceeded!) |
+| Design Power Budget (W)  | Unspecified*                     |
+| Power Budget Margin (W)  | NA                               |
+| Dynamic (W)              | 59.876                           |
+| Device Static (W)        | 0.815                            |
+| Effective TJA (C/W)      | 2.7                              |
+| Max Ambient (C)          | 0.0                              |
+| Junction Temperature (C) | 125.0                            |
+| Confidence Level         | Low                              |
+| Setting File             | ---                              |
+| Simulation Activity File | ---                              |
+| Design Nets Matched      | NA                               |
++--------------------------+----------------------------------+
+* Specify Design Power Budget using, set_operating_conditions -design_power_budget <value in Watts>
+
+
+1.1 On-Chip Components
+----------------------
+
++-------------------------+-----------+----------+-----------+-----------------+
+| On-Chip                 | Power (W) | Used     | Available | Utilization (%) |
++-------------------------+-----------+----------+-----------+-----------------+
+| Slice Logic             |    20.803 |     4562 |       --- |             --- |
+|   LUT as Logic          |    20.051 |     2139 |     63400 |            3.37 |
+|   F7/F8 Muxes           |     0.275 |      332 |     63400 |            0.52 |
+|   CARRY4                |     0.271 |       60 |     15850 |            0.38 |
+|   Register              |     0.179 |     1560 |    126800 |            1.23 |
+|   BUFG                  |     0.027 |        5 |        32 |           15.63 |
+|   LUT as Shift Register |    <0.001 |       10 |     19000 |            0.05 |
+|   Others                |     0.000 |      127 |       --- |             --- |
+| Signals                 |    29.193 |     3977 |       --- |             --- |
+| Block RAM               |     1.589 |       29 |       135 |           21.48 |
+| PLL                     |     3.723 |        1 |         6 |           16.67 |
+| I/O                     |     4.568 |       64 |       285 |           22.46 |
+| Static Power            |     0.815 |          |           |                 |
+| Total                   |    60.691 |          |           |                 |
++-------------------------+-----------+----------+-----------+-----------------+
+
+
+1.2 Power Supply Summary
+------------------------
+
++-----------+-------------+-----------+-------------+------------+
+| Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
++-----------+-------------+-----------+-------------+------------+
+| Vccint    |       1.000 |    52.632 |      52.061 |      0.572 |
+| Vccaux    |       1.800 |     2.036 |       1.943 |      0.093 |
+| Vcco33    |       3.300 |     1.271 |       1.267 |      0.004 |
+| Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
+| Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |
+| Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |
+| Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |
+| Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |
+| Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |
+| Vccbram   |       1.000 |     0.163 |       0.136 |      0.027 |
+| MGTAVcc   |       1.000 |     0.000 |       0.000 |      0.000 |
+| MGTAVtt   |       1.200 |     0.000 |       0.000 |      0.000 |
+| Vccadc    |       1.800 |     0.020 |       0.000 |      0.020 |
++-----------+-------------+-----------+-------------+------------+
+
+
+1.3 Confidence Level
+--------------------
+
++-----------------------------+------------+--------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+
+| User Input Data             | Confidence | Details                                                | Action                                                                                                             |
++-----------------------------+------------+--------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+
+| Design implementation state | High       | Design is routed                                       |                                                                                                                    |
+| Clock nodes activity        | Low        | User specified less than 75% of clocks                 | Provide missing clock activity with a constraint file, simulation results or by editing the "By Clock Domain" view |
+| I/O nodes activity          | Low        | More than 75% of inputs are missing user specification | Provide missing input activity with simulation results or by editing the "By Resource Type -> I/Os" view           |
+| Internal nodes activity     | Medium     | User specified less than 25% of internal nodes         | Provide missing internal nodes activity with simulation results or by editing the "By Resource Type" views         |
+| Device models               | High       | Device models are Production                           |                                                                                                                    |
+|                             |            |                                                        |                                                                                                                    |
+| Overall confidence level    | Low        |                                                        |                                                                                                                    |
++-----------------------------+------------+--------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+
+
+
+2. Settings
+-----------
+
+2.1 Environment
+---------------
+
++-----------------------+--------------------------+
+| Ambient Temp (C)      | 25.0                     |
+| ThetaJA (C/W)         | 2.7                      |
+| Airflow (LFM)         | 250                      |
+| Heat Sink             | medium (Medium Profile)  |
+| ThetaSA (C/W)         | 4.6                      |
+| Board Selection       | medium (10"x10")         |
+| # of Board Layers     | 12to15 (12 to 15 Layers) |
+| Board Temperature (C) | 25.0                     |
++-----------------------+--------------------------+
+
+
+2.2 Clock Constraints
+---------------------
+
++-------+--------+-----------------+
+| Clock | Domain | Constraint (ns) |
++-------+--------+-----------------+
+
+
+3. Detailed Reports
+-------------------
+
+3.1 By Hierarchy
+----------------
+
++---------------------------------------------------------------------------------+-----------+
+| Name                                                                            | Power (W) |
++---------------------------------------------------------------------------------+-----------+
+| CPU_UART                                                                        |    59.876 |
+|   cpuclk                                                                        |     3.876 |
+|     inst                                                                        |     3.876 |
+|   decoder                                                                       |    15.239 |
+|   ifetch                                                                        |     0.971 |
+|   led24                                                                         |     0.013 |
+|   memory                                                                        |     1.854 |
+|     ram                                                                         |     1.777 |
+|       U0                                                                        |     1.777 |
+|         inst_blk_mem_gen                                                        |     1.777 |
+|           gnbram.gnativebmg.native_blk_mem_gen                                  |     1.777 |
+|             valid.cstr                                                          |     1.777 |
+|               bindec_a.bindec_inst_a                                            |     0.080 |
+|               has_mux_a.A                                                       |     0.494 |
+|               ramloop[0].ram.r                                                  |     0.085 |
+|                 prim_init.ram                                                   |     0.085 |
+|               ramloop[10].ram.r                                                 |     0.043 |
+|                 prim_init.ram                                                   |     0.043 |
+|               ramloop[11].ram.r                                                 |     0.075 |
+|                 prim_init.ram                                                   |     0.075 |
+|               ramloop[12].ram.r                                                 |     0.055 |
+|                 prim_init.ram                                                   |     0.055 |
+|               ramloop[13].ram.r                                                 |     0.050 |
+|                 prim_init.ram                                                   |     0.050 |
+|               ramloop[14].ram.r                                                 |     0.041 |
+|                 prim_init.ram                                                   |     0.041 |
+|               ramloop[1].ram.r                                                  |     0.174 |
+|                 prim_init.ram                                                   |     0.174 |
+|               ramloop[2].ram.r                                                  |     0.168 |
+|                 prim_init.ram                                                   |     0.168 |
+|               ramloop[3].ram.r                                                  |     0.072 |
+|                 prim_init.ram                                                   |     0.072 |
+|               ramloop[4].ram.r                                                  |     0.095 |
+|                 prim_init.ram                                                   |     0.095 |
+|               ramloop[5].ram.r                                                  |     0.078 |
+|                 prim_init.ram                                                   |     0.078 |
+|               ramloop[6].ram.r                                                  |     0.032 |
+|                 prim_init.ram                                                   |     0.032 |
+|               ramloop[7].ram.r                                                  |     0.104 |
+|                 prim_init.ram                                                   |     0.104 |
+|               ramloop[8].ram.r                                                  |     0.080 |
+|                 prim_init.ram                                                   |     0.080 |
+|               ramloop[9].ram.r                                                  |     0.051 |
+|                 prim_init.ram                                                   |     0.051 |
+|   programrom_o                                                                  |    31.774 |
+|     instmem                                                                     |     5.204 |
+|       U0                                                                        |     5.204 |
+|         inst_blk_mem_gen                                                        |     5.204 |
+|           gnbram.gnativebmg.native_blk_mem_gen                                  |     5.204 |
+|             valid.cstr                                                          |     5.204 |
+|               bindec_a.bindec_inst_a                                            |     0.027 |
+|               has_mux_a.A                                                       |     3.605 |
+|               ramloop[0].ram.r                                                  |     0.313 |
+|                 prim_init.ram                                                   |     0.313 |
+|               ramloop[10].ram.r                                                 |     0.016 |
+|                 prim_init.ram                                                   |     0.016 |
+|               ramloop[11].ram.r                                                 |     0.084 |
+|                 prim_init.ram                                                   |     0.084 |
+|               ramloop[12].ram.r                                                 |     0.029 |
+|                 prim_init.ram                                                   |     0.029 |
+|               ramloop[13].ram.r                                                 |     0.032 |
+|                 prim_init.ram                                                   |     0.032 |
+|               ramloop[14].ram.r                                                 |     0.006 |
+|                 prim_init.ram                                                   |     0.006 |
+|               ramloop[1].ram.r                                                  |     0.554 |
+|                 prim_init.ram                                                   |     0.554 |
+|               ramloop[2].ram.r                                                  |     0.202 |
+|                 prim_init.ram                                                   |     0.202 |
+|               ramloop[3].ram.r                                                  |     0.088 |
+|                 prim_init.ram                                                   |     0.088 |
+|               ramloop[4].ram.r                                                  |     0.042 |
+|                 prim_init.ram                                                   |     0.042 |
+|               ramloop[5].ram.r                                                  |     0.042 |
+|                 prim_init.ram                                                   |     0.042 |
+|               ramloop[6].ram.r                                                  |     0.006 |
+|                 prim_init.ram                                                   |     0.006 |
+|               ramloop[7].ram.r                                                  |     0.098 |
+|                 prim_init.ram                                                   |     0.098 |
+|               ramloop[8].ram.r                                                  |     0.032 |
+|                 prim_init.ram                                                   |     0.032 |
+|               ramloop[9].ram.r                                                  |     0.028 |
+|                 prim_init.ram                                                   |     0.028 |
+|   switch24                                                                      |     0.007 |
+|   tube                                                                          |     0.457 |
+|   uart                                                                          |     1.210 |
+|     inst                                                                        |     1.210 |
+|       upg_inst                                                                  |     1.210 |
+|         axi_uart_inst                                                           |     0.196 |
+|           U0                                                                    |     0.196 |
+|             AXI_LITE_IPIF_I                                                     |     0.071 |
+|               I_SLAVE_ATTACHMENT                                                |     0.071 |
+|                 I_DECODER                                                       |     0.030 |
+|                   MEM_DECODE_GEN[0].PER_CE_GEN[0].MULTIPLE_CES_THIS_CS_GEN.CE_I |     0.001 |
+|                   MEM_DECODE_GEN[0].PER_CE_GEN[2].MULTIPLE_CES_THIS_CS_GEN.CE_I |    <0.001 |
+|             UARTLITE_CORE_I                                                     |     0.124 |
+|               BAUD_RATE_I                                                       |     0.029 |
+|               UARTLITE_RX_I                                                     |     0.045 |
+|                 DELAY_16_I                                                      |     0.009 |
+|                 INPUT_DOUBLE_REGS3                                              |     0.010 |
+|                 SRL_FIFO_I                                                      |     0.014 |
+|                   I_SRL_FIFO_RBU_F                                              |     0.014 |
+|                     CNTR_INCR_DECR_ADDN_F_I                                     |     0.013 |
+|                     DYNSHREG_F_I                                                |    <0.001 |
+|               UARTLITE_TX_I                                                     |     0.048 |
+|                 MID_START_BIT_SRL16_I                                           |    <0.001 |
+|                 SRL_FIFO_I                                                      |     0.024 |
+|                   I_SRL_FIFO_RBU_F                                              |     0.024 |
+|                     CNTR_INCR_DECR_ADDN_F_I                                     |     0.016 |
+|                     DYNSHREG_F_I                                                |     0.008 |
++---------------------------------------------------------------------------------+-----------+
+
+
